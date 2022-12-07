@@ -41,9 +41,23 @@ function App() {
     lector.readAsText(archivo);
   }
 
-  function validate_url(url) {
-    const line = { url, cert: 0 }
-    setUrls([line, ...urls])
+  // function validate_url(url) {
+  //   const line = { url, cert: 0 }
+  //   setUrls([line, ...urls])
+  // }
+
+  async function validate_url(url) {
+    // GET request using fetch with async/await
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ url })
+  };
+    const response = await fetch('http://localhost:3000/url', requestOptions);
+    const data = await response.json();
+    console.log(data)
+    setUrls([data, ...urls])
   }
 
   return (
@@ -80,7 +94,7 @@ function App() {
         <div className='flex flex-col items-center justify-center text-white'>
           {
             urls.map((singleUrl, id)  => {
-              return <Url key={id} url={singleUrl.url} cert={singleUrl.cert} edge_l={2} firefox_l={1} chrome_l={3}></Url>
+              return <Url key={id} url={singleUrl.url} cert={singleUrl.cert} edge_l={singleUrl.edge_l} firefox_l={singleUrl.firefox_l} chrome_l={singleUrl.chrome_l}></Url>
             })
           }
         </div>
