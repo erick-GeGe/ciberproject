@@ -19,147 +19,147 @@ export default function Url({ url, certs, edge_l, firefox_l, chrome_l }) {
                 <h3 className='text-base my-4 inline-block w-6/12 px-5'  >{url}</h3>
                 <div className='inline-block w-2/12 py-5'>
                     <p className='text-center pr-7 text-lg py-3'>Microsoft Edge</p>
-                        {(() => {
-                            if ( edge_l == 1) {
-                                return (
-                                    <div class="flex flex-wrap">
-                                        <div class="flex items-center mr-4">
-                                            <input checked id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2"  />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input  id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled/>
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
-                                        </div>
+                    {(() => {
+                        if (edge_l == 1) {
+                            return (
+                                <div class="flex flex-wrap">
+                                    <div class="flex items-center mr-4">
+                                        <input checked id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" />
                                     </div>
-                                )
-                            } else if ( edge_l == 2) {
-                                return (
-                                    <div class="flex flex-wrap">
-                                        <div class="flex items-center mr-4">
-                                            <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input checked id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
-                                        </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled />
                                     </div>
-                                )
-                            } else {
-                                return (
-                                    <div class="flex flex-wrap">
-                                        <div class="flex items-center mr-4">
-                                            <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input  id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled/>
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input checked id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2"  />
-                                        </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
                                     </div>
-                                )
-                            }
-                        })()}
+                                </div>
+                            )
+                        } else if (edge_l == 2) {
+                            return (
+                                <div class="flex flex-wrap">
+                                    <div class="flex items-center mr-4">
+                                        <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input checked id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
+                                    </div>
+                                </div>
+                            )
+                        } else {
+                            return (
+                                <div class="flex flex-wrap">
+                                    <div class="flex items-center mr-4">
+                                        <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input checked id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" />
+                                    </div>
+                                </div>
+                            )
+                        }
+                    })()}
                 </div>
                 <div className='inline-block w-2/12 pb-3'>
                     <p className='text-center pr-7 text-lg py-3'>Mozilla Firefox</p>
                     {(() => {
-                            if ( firefox_l == 1) {
-                                return (
-                                    <div class="flex flex-wrap">
-                                        <div class="flex items-center mr-4">
-                                            <input checked id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2"  />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input  id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled/>
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
-                                        </div>
+                        if (firefox_l == 1) {
+                            return (
+                                <div class="flex flex-wrap">
+                                    <div class="flex items-center mr-4">
+                                        <input checked id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" />
                                     </div>
-                                )
-                            } else if ( firefox_l == 2) {
-                                return (
-                                    <div class="flex flex-wrap">
-                                        <div class="flex items-center mr-4">
-                                            <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input checked id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
-                                        </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled />
                                     </div>
-                                )
-                            } else {
-                                return (
-                                    <div class="flex flex-wrap">
-                                        <div class="flex items-center mr-4">
-                                            <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input  id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled/>
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input checked id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2"  />
-                                        </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
                                     </div>
-                                )
-                            }
-                        })()}
+                                </div>
+                            )
+                        } else if (firefox_l == 2) {
+                            return (
+                                <div class="flex flex-wrap">
+                                    <div class="flex items-center mr-4">
+                                        <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input checked id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
+                                    </div>
+                                </div>
+                            )
+                        } else {
+                            return (
+                                <div class="flex flex-wrap">
+                                    <div class="flex items-center mr-4">
+                                        <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input checked id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" />
+                                    </div>
+                                </div>
+                            )
+                        }
+                    })()}
                 </div>
                 <div className='inline-block w-2/12 pb-3'>
                     <p className='text-center pr-7 text-lg py-3'>Google Chrome</p>
                     {(() => {
-                            if ( chrome_l == 1) {
-                                return (
-                                    <div class="flex flex-wrap">
-                                        <div class="flex items-center mr-4">
-                                            <input checked id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2"  />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input  id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled/>
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
-                                        </div>
+                        if (chrome_l == 1) {
+                            return (
+                                <div class="flex flex-wrap">
+                                    <div class="flex items-center mr-4">
+                                        <input checked id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" />
                                     </div>
-                                )
-                            } else if ( chrome_l == 2) {
-                                return (
-                                    <div class="flex flex-wrap">
-                                        <div class="flex items-center mr-4">
-                                            <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input checked id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
-                                        </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled />
                                     </div>
-                                )
-                            } else {
-                                return (
-                                    <div class="flex flex-wrap">
-                                        <div class="flex items-center mr-4">
-                                            <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input  id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled/>
-                                        </div>
-                                        <div class="flex items-center mr-4">
-                                            <input checked id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2"  />
-                                        </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
                                     </div>
-                                )
-                            }
-                        })()}
+                                </div>
+                            )
+                        } else if (chrome_l == 2) {
+                            return (
+                                <div class="flex flex-wrap">
+                                    <div class="flex items-center mr-4">
+                                        <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input checked id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" disabled />
+                                    </div>
+                                </div>
+                            )
+                        } else {
+                            return (
+                                <div class="flex flex-wrap">
+                                    <div class="flex items-center mr-4">
+                                        <input id="red-radio" type="radio" class="w-16 h-12 text-red-600 bg-gray-100 border-gray-300 accent-red-500 focus:ring-2" disabled />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input id="green-radio" type="radio" class="w-16 h-12 text-green-600 bg-yellow-100 border-gray-300 accent-yellow-300 focus:ring-2" disabled />
+                                    </div>
+                                    <div class="flex items-center mr-4">
+                                        <input checked id="purple-radio" type="radio" class="w-16 h-12 text-purple-600 bg-gray-100 border-gray-300 accent-green-500 focus:ring-2" />
+                                    </div>
+                                </div>
+                            )
+                        }
+                    })()}
                 </div>
             </div>
             <div className='bg-slate-600 rounded-md' hidden={visible}>
@@ -187,30 +187,33 @@ export default function Url({ url, certs, edge_l, firefox_l, chrome_l }) {
                     </div>
                 </div>
 
-                <div className='grid-cols-6 flex items-center justify-center bg-gray-600 px-4 py-2'>
-                    <div className='w-5/12 text-center'>
-                        Certificado 1
-                    </div>
-                    <div className='w-7/12 grid-cols-5 flex items-center justify-center'>
-                        <div className='w-1/5 text-center'>
-                            name here
+                {
+                    certs.map((certificate, id) => {
+                        return <div key={id} className='grid-cols-6 flex items-center justify-center bg-gray-600 px-4 py-2'>
+                            <div className='w-5/12 text-center'>
+                                {certificate.cert}
+                            </div>
+                            <div className='w-7/12 grid-cols-5 flex items-center justify-center'>
+                                <div className='w-1/5 text-center'>
+                                    {certificate.subject}
+                                </div>
+                                <div className='w-1/5 text-center'>
+                                    {certificate.issuer}
+                                </div>
+                                <div className='w-1/5 text-center'>
+                                    {certificate.periodo}
+                                </div>
+                                <div className='w-1/5 text-center'>
+                                    {certificate.info}
+                                </div>
+                                <div className='w-1/5 text-center'>
+                                    {certificate.constraints}
+                                </div>
+                            </div>
                         </div>
-                        <div className='w-1/5 text-center'>
-                            Issuer name here
-                        </div>
-                        <div className='w-1/5 text-center'>
-                            Periodo de validez here
-                        </div>
-                        <div className='w-1/5 text-center'>
-                            Info llave prublica here
-                        </div>
-                        <div className='w-1/5 text-center'>
-                            Basic constraints here
-                        </div>
-                    </div>
-                </div>
-
+                    })
+                }
             </div>
-        </div>
+        </div >
     )
 }
