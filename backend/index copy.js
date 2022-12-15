@@ -10,15 +10,16 @@ app.use(cors())
 
 var port = 3000
 
-function analizarurl(url) {
+app.post('/url', function (req, res) {
+	let url = req.body.url;
+
 	var Cont_nivelCh = 0;
 	var Cont_nivelFx = 0;
 	var Cont_nivelEg = 0;
 	var chCer = false;
 	var fxCer = false;
 	var egCer = false;
-	let newJson = {}
-	
+
 	try {
 		url = url.split('http://')
 		if (url.length == 1) {
@@ -26,36 +27,24 @@ function analizarurl(url) {
 		}
 		url = url[1]
 		url = url.split('/')[0]
-
+	
 		var options = {
 			host: url,
 			port: 443,
 			method: 'GET'
 		};
 	} catch (error) {
-		newJson = {
+		var newJson = {
 			'url': 'Ocurrio un error',
-			'edge_l': '0',
+			'edge_l' : '0',
 			'firefox_l': '0',
 			'chrome_l': '0',
-			'certificates': []
+			'certificates' : []
 		}
 		res.json(newJson);
 		return;
 	}
-
-	const setnewjson = (Cont_nivelCh, Cont_nivelFx, Cont_nivelEg, certs) =>{
-		newJson =  {
-			url,
-			'edge': Cont_nivelCh,
-			'firefox': Cont_nivelFx,
-			'chrome': Cont_nivelEg,
-			'certificates': certs
-		}
-		return true;
-	}
-
-	const request = https.request(options, function (res2) {
+	const request = https.request(options, async function (res2) {
 		let cert = res2.connection.getPeerCertificate(true);
 		let list = new Set();
 		let certs = []
@@ -69,12 +58,12 @@ function analizarurl(url) {
 		do {
 			list.add(cert);
 			let certicate = {
-				'cert': count,
-				'subject': cert.subject['CN'],
-				'issuer': cert.issuer['CN'],
-				'periodo': cert.valid_from + ' ' + cert.valid_to,
-				'info': cert.issuerCertificate['fingerprint'].substring(0, cert.issuerCertificate['fingerprint'].length / 2) + ' ' + cert.issuerCertificate['fingerprint'].substring(cert.issuerCertificate['fingerprint'].length / 2, cert.issuerCertificate['fingerprint'].length),
-				'constraints': cert.issuerCertificate['serialNumber']
+				'cert' : count, 
+				'subject' : cert.subject['CN'], 
+				'issuer' : cert.issuer['CN'], 
+				'periodo' : cert.valid_from + ' ' + cert.valid_to, 
+				'info' : cert.issuerCertificate['fingerprint'].substring(0, cert.issuerCertificate['fingerprint'].length/2) + ' ' +  cert.issuerCertificate['fingerprint'].substring(cert.issuerCertificate['fingerprint'].length/2, cert.issuerCertificate['fingerprint'].length), 
+				'constraints' : cert.issuerCertificate['serialNumber']
 			}
 			certs.push(certicate)
 			count++;
@@ -98,27 +87,17 @@ function analizarurl(url) {
 		if (egCer == true) {
 			Cont_nivelEg++;
 		}
-		// var seturldone = setnewjson(Cont_nivelCh, Cont_nivelFx, Cont_nivelEg, certs);
-		console.log(newJson)
-		newJson =  {
+
+		var newJson = {
 			url,
-			'edge': Cont_nivelCh,
-			'firefox': Cont_nivelFx,
-			'chrome': Cont_nivelEg,
-			'certificates': certs
+			'edge' :Cont_nivelCh,
+			'firefox' :Cont_nivelFx,
+			'chrome' :Cont_nivelEg,
+			'certificates' : certs
 		}
-		console.log(newJson)
+		res.json(newJson);
 	});
 	request.end();
-	console.log(Cont_nivelEg)
-	return newJson;
-}
-
-app.post('/url', function (req, res) {
-	let url = req.body.url;
-	let newjson = analizarurl(url) 
-	console.log(newjson)
-	res.json(newjson)
 })
 
 app.post('/urls', function (req, res) {
@@ -141,7 +120,7 @@ app.post('/urls', function (req, res) {
 			}
 			url = url[1]
 			url = url.split('/')[0]
-
+		
 			var options = {
 				host: url,
 				port: 443,
@@ -150,10 +129,10 @@ app.post('/urls', function (req, res) {
 		} catch (error) {
 			return {
 				'url': 'Ocurrio un error',
-				'edge_l': '0',
+				'edge_l' : '0',
 				'firefox_l': '0',
 				'chrome_l': '0',
-				'certificates': []
+				'certificates' : []
 			}
 		}
 
@@ -162,7 +141,7 @@ app.post('/urls', function (req, res) {
 			let cert = res2.connection.getPeerCertificate(true);
 			let list = new Set();
 			let certs = []
-
+	
 			if (res2.socket.authorized == true) {
 				Cont_nivelCh++;
 				Cont_nivelFx++;
@@ -172,12 +151,12 @@ app.post('/urls', function (req, res) {
 			do {
 				list.add(cert);
 				let certicate = {
-					'cert': count,
-					'subject': cert.subject['CN'],
-					'issuer': cert.issuer['CN'],
-					'periodo': cert.valid_from + ' ' + cert.valid_to,
-					'info': cert.issuerCertificate['fingerprint'].substring(0, cert.issuerCertificate['fingerprint'].length / 2) + ' ' + cert.issuerCertificate['fingerprint'].substring(cert.issuerCertificate['fingerprint'].length / 2, cert.issuerCertificate['fingerprint'].length),
-					'constraints': cert.issuerCertificate['serialNumber']
+					'cert' : count, 
+					'subject' : cert.subject['CN'], 
+					'issuer' : cert.issuer['CN'], 
+					'periodo' : cert.valid_from + ' ' + cert.valid_to, 
+					'info' : cert.issuerCertificate['fingerprint'].substring(0, cert.issuerCertificate['fingerprint'].length/2) + ' ' +  cert.issuerCertificate['fingerprint'].substring(cert.issuerCertificate['fingerprint'].length/2, cert.issuerCertificate['fingerprint'].length), 
+					'constraints' : cert.issuerCertificate['serialNumber']
 				}
 				certs.push(certicate)
 				count++;
@@ -185,13 +164,13 @@ app.post('/urls', function (req, res) {
 				var nuevo_cer = cert.issuerCertificate
 				cert = cert.issuerCertificate;
 			} while (cert && typeof cert === "object" && !list.has(cert));
-
+	
 			var sub_CertifName = JSON.stringify(isuer_final['CN']);
 			sub_CertifName = sub_CertifName.substring(1, sub_CertifName.length - 1);
 			chCer = TS_Chrome(sub_CertifName);
 			fxCer = TS_FIrefox(sub_CertifName);
 			egCer = TS_Edge(sub_CertifName);
-
+	
 			if (chCer == true) {
 				Cont_nivelCh++;
 			}
@@ -201,13 +180,13 @@ app.post('/urls', function (req, res) {
 			if (egCer == true) {
 				Cont_nivelEg++;
 			}
-
-			newurljson = {
+	
+			newurljson =  {
 				url,
-				'edge': Cont_nivelCh,
-				'firefox': Cont_nivelFx,
-				'chrome': Cont_nivelEg,
-				'certificates': certs
+				'edge' :Cont_nivelCh,
+				'firefox' :Cont_nivelFx,
+				'chrome' :Cont_nivelEg,
+				'certificates' : certs
 			}
 			console.log(newurljson)
 		});
