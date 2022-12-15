@@ -19,6 +19,7 @@
   "homepage": "https://github.com/erick-GeGe/ciberproject#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.0"
   }
 }

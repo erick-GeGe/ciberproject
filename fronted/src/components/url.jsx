@@ -12,6 +12,7 @@ export default function Url({ url, certs, edge_l, firefox_l, chrome_l }) {
         else
             setVisible(true)
     }
+    console.log('url values')
     console.log(edge_l, chrome_l, firefox_l)
 
     return (
