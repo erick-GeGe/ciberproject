@@ -3,8 +3,8 @@ var cors = require('cors');
 var https = require('https');
 const _importDynamic = new Function('modulePath', 'return import(modulePath)');
 const fetch = async function (...args) {
-    const {default: fetch} = await _importDynamic('node-fetch');
-    return fetch(...args);
+	const { default: fetch } = await _importDynamic('node-fetch');
+	return fetch(...args);
 }
 
 const { TS_Chrome, TS_FIrefox, TS_Edge } = require('./buscador_trsustore.js')
@@ -123,24 +123,247 @@ app.post('/urls', async function (req, res) {
 		const data = await response.json();
 		return data
 	}))
-	console.log(newJson)
+	// console.log(newJson)
 	res.json(newJson);
 })
 
 
 app.get('/get_trust_store_chrome', function (req, res) {
 	var rawdata = fs.readFileSync('chromium-trust-store.json');
-	res.json(JSON.parse(rawdata));
+	let chr_data = JSON.parse(rawdata);
+	const length = Object.keys(chr_data).length;
+	const type_key = 'SHA'
+	const length_key = '256 bits'
+
+	let certs = []
+	let newestcerts_idx = []
+	let oldestcerts_idx = []
+	let newestcerts = []
+	let oldestcerts = []
+	for (let i = 0; i < 3; i++) {
+		let newest = 0;
+		for (let index = 1; index < length; index++) {
+			let b_dates = chr_data[newest]['NotBefore'].split('-');
+			let c_dates = chr_data[index]['NotBefore'].split('-');
+			if (parseInt(c_dates[0]) <= parseInt(b_dates[0]))
+				if (parseInt(c_dates[1]) <= parseInt(b_dates[1]))
+					if (parseInt(c_dates[2]) <= parseInt(b_dates[2])) {
+						found = false;
+						for (let j = 0; j < newestcerts_idx.length; j++)
+							if (newestcerts_idx[j] == index)
+								found = true;
+						if (!found)
+							newest = index;
+					}
+		}
+		newestcerts_idx.push(newest)
+	}
+	for (let i = 0; i < 3; i++) {
+		let olderst = 0;
+		for (let index = 1; index < length; index++) {
+			let b_dates = chr_data[olderst]['NotBefore'].split('-');
+			let c_dates = chr_data[index]['NotBefore'].split('-');
+			if (parseInt(c_dates[0]) >= parseInt(b_dates[0]))
+				if (parseInt(c_dates[1]) >= parseInt(b_dates[1]))
+					if (parseInt(c_dates[2]) >= parseInt(b_dates[2])) {
+						found = false;
+						for (let j = 0; j < oldestcerts_idx.length; j++)
+							if (oldestcerts_idx[j] == index)
+								found = true;
+						if (!found)
+							olderst = index;
+					}
+		}
+		oldestcerts_idx.push(olderst)
+	}
+	for (let index = 0; index < length; index++) {
+		var certi = {
+			'certificate': chr_data[index]['Subject'],
+			'since': chr_data[index]['NotBefore'],
+			'to': chr_data[index]['NotAfter']
+		};
+		certs.push(certi);
+	}
+	for (let index = 0; index < 3; index++) {
+		var n_certi = {
+			'certificate': chr_data[newestcerts_idx[index]]['Subject'],
+			'since': chr_data[newestcerts_idx[index]]['NotBefore'],
+			'to': chr_data[newestcerts_idx[index]]['NotAfter']
+		};
+		var o_certi = {
+			'certificate': chr_data[oldestcerts_idx[index]]['Subject'],
+			'since': chr_data[oldestcerts_idx[index]]['NotBefore'],
+			'to': chr_data[oldestcerts_idx[index]]['NotAfter']
+		};
+		newestcerts.push(n_certi);
+		oldestcerts.push(o_certi)
+	}
+
+	let newJson = {
+		'length': length,
+		type_key,
+		length_key,
+		newestcerts,
+		oldestcerts,
+		'allcerts': certs
+	}
+	res.json(newJson);
 })
 
 app.get('/get_trust_store_edge', function (req, res) {
 	var rawdata = fs.readFileSync('edge-trust-store.json');
-	res.json(JSON.parse(rawdata));
+	let chr_data = JSON.parse(rawdata);
+	const length = Object.keys(chr_data).length;
+	const type_key = 'RSA'
+	const length_key = '2048 bits'
+
+	let certs = []
+	let newestcerts_idx = []
+	let oldestcerts_idx = []
+	let newestcerts = []
+	let oldestcerts = []
+	for (let i = 0; i < 3; i++) {
+		let newest = 0;
+		for (let index = 1; index < length; index++) {
+			let b_dates = chr_data[newest]['Valid From [GMT]'].split(' ');
+			let c_dates = chr_data[index]['Valid From [GMT]'].split(' ');
+			if (parseInt(c_dates[0]) <= parseInt(b_dates[0])) {
+				found = false;
+				for (let j = 0; j < newestcerts_idx.length; j++)
+					if (newestcerts_idx[j] == index)
+						found = true;
+				if (!found)
+					newest = index;
+			}
+		}
+		newestcerts_idx.push(newest)
+	}
+	for (let i = 0; i < 3; i++) {
+		let olderst = 0;
+		for (let index = 1; index < length; index++) {
+			let b_dates = chr_data[olderst]['Valid From [GMT]'].split(' ');
+			let c_dates = chr_data[index]['Valid From [GMT]'].split(' ');
+			if (parseInt(c_dates[0]) >= parseInt(b_dates[0])) {
+				found = false;
+				for (let j = 0; j < oldestcerts_idx.length; j++)
+					if (oldestcerts_idx[j] == index)
+						found = true;
+				if (!found)
+					olderst = index;
+			}
+		}
+		oldestcerts_idx.push(olderst)
+	}
+	for (let index = 0; index < length; index++) {
+		var certi = {
+			'certificate': chr_data[index]['CA Common Name or Certificate Name'],
+			'since': chr_data[index]['Valid From [GMT]'],
+			'to': chr_data[index]['Valid To [GMT]']
+		};
+		certs.push(certi);
+	}
+	for (let index = 0; index < 3; index++) {
+		var n_certi = {
+			'certificate': chr_data[newestcerts_idx[index]]['CA Common Name or Certificate Name'],
+			'since': chr_data[newestcerts_idx[index]]['Valid From [GMT]'],
+			'to': chr_data[newestcerts_idx[index]]['Valid To [GMT]']
+		};
+		var o_certi = {
+			'certificate': chr_data[oldestcerts_idx[index]]['CA Common Name or Certificate Name'],
+			'since': chr_data[oldestcerts_idx[index]]['Valid From [GMT]'],
+			'to': chr_data[oldestcerts_idx[index]]['Valid To [GMT]']
+		};
+		newestcerts.push(n_certi);
+		oldestcerts.push(o_certi)
+	}
+
+	let newJson = {
+		'length': length,
+		type_key,
+		length_key,
+		newestcerts,
+		oldestcerts,
+		'allcerts': certs
+	}
+	res.json(newJson);
 })
 
 app.get('/get_trust_store_firefox', function (req, res) {
 	var rawdata = fs.readFileSync('firefox-trust-store.json');
-	res.json(JSON.parse(rawdata));
+	let chr_data = JSON.parse(rawdata);
+	const length = Object.keys(chr_data).length;
+	const type_key = 'RSA'
+	const length_key = '4096 bits'
+
+	let certs = []
+	let newestcerts_idx = []
+	let oldestcerts_idx = []
+	let newestcerts = []
+	let oldestcerts = []
+	for (let i = 0; i < 3; i++) {
+		let newest = 0;
+		for (let index = 1; index < length; index++) {
+			let b_dates = chr_data[newest]['Valid From [GMT]'].split('.');
+			let c_dates = chr_data[index]['Valid From [GMT]'].split('.');
+			if (parseInt(c_dates[0]) <= parseInt(b_dates[0])) {
+				found = false;
+				for (let j = 0; j < newestcerts_idx.length; j++)
+					if (newestcerts_idx[j] == index)
+						found = true;
+				if (!found)
+					newest = index;
+			}
+		}
+		newestcerts_idx.push(newest)
+	}
+	for (let i = 0; i < 3; i++) {
+		let olderst = 0;
+		for (let index = 1; index < length; index++) {
+			let b_dates = chr_data[olderst]['Valid From [GMT]'].split('.');
+			let c_dates = chr_data[index]['Valid From [GMT]'].split('.');
+			if (parseInt(c_dates[0]) >= parseInt(b_dates[0])) {
+				found = false;
+				for (let j = 0; j < oldestcerts_idx.length; j++)
+					if (oldestcerts_idx[j] == index)
+						found = true;
+				if (!found)
+					olderst = index;
+			}
+		}
+		oldestcerts_idx.push(olderst)
+	}
+	for (let index = 0; index < length; index++) {
+		var certi = {
+			'certificate': chr_data[index]['Certificate Issuer Organization'],
+			'since': chr_data[index]['Valid From [GMT]'],
+			'to': chr_data[index]['Valid To [GMT]']
+		};
+		certs.push(certi);
+	}
+	for (let index = 0; index < 3; index++) {
+		var n_certi = {
+			'certificate': chr_data[newestcerts_idx[index]]['Certificate Issuer Organization'],
+			'since': chr_data[newestcerts_idx[index]]['Valid From [GMT]'],
+			'to': chr_data[newestcerts_idx[index]]['Valid To [GMT]']
+		};
+		var o_certi = {
+			'certificate': chr_data[oldestcerts_idx[index]]['Certificate Issuer Organization'],
+			'since': chr_data[oldestcerts_idx[index]]['Valid From [GMT]'],
+			'to': chr_data[oldestcerts_idx[index]]['Valid To [GMT]']
+		};
+		newestcerts.push(n_certi);
+		oldestcerts.push(o_certi)
+	}
+
+	let newJson = {
+		'length': length,
+		type_key,
+		length_key,
+		newestcerts,
+		oldestcerts,
+		'allcerts': certs
+	}
+	res.json(newJson);
 })
 
 app.listen(port)
