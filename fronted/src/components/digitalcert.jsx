@@ -34,7 +34,7 @@ function Digitalcert() {
 				},
 				body: JSON.stringify({ urls: contenido })
 			};
-			const response = await fetch('http://localhost:3000/urls', requestOptions);
+			const response = await fetch('http://143.198.224.105:3000/urls', requestOptions);
 			const data = await response.json();
 			console.log(data)
 			setUrls([...data, ...urls])
@@ -52,7 +52,7 @@ function Digitalcert() {
 			},
 			body: JSON.stringify({ url })
 		};
-		const response = await fetch('http://localhost:3000/url', requestOptions);
+		const response = await fetch('http://143.198.224.105:3000/url', requestOptions);
 		const data = await response.json();
 		console.log(data)
 		setUrls([data, ...urls])

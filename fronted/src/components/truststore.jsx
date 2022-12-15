@@ -18,15 +18,15 @@ function Truststore() {
     let url = ""
     if (browser == "edge") {
         browser_title = "Microsoft Edge"
-        url = 'http://localhost:3000/get_trust_store_edge'
+        url = 'http://143.198.224.105:3000/get_trust_store_edge'
     }
     else if (browser == "firefox") {
         browser_title = "Mozilla Firefox"
-        url = 'http://localhost:3000/get_trust_store_firefox'
+        url = 'http://143.198.224.105:3000/get_trust_store_firefox'
     }
     else {
         browser_title = "Google Chrome"
-        url = 'http://localhost:3000/get_trust_store_chrome'
+        url = 'http://143.198.224.105:3000/get_trust_store_chrome'
     }
 
     async function updatefields() {
