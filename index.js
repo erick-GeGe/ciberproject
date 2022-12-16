@@ -14,7 +14,7 @@ var app = express()
 app.use(express.json())
 app.use(cors())
 
-var port = 3000
+var port = 80
 
 app.post('/url', function (req, res) {
 	let url = req.body.url;
