@@ -16,6 +16,5 @@ npm install
 ## Deploy
 Si se desea deployar simplemente descargue el repositorio en el servidor de hosting que deseen y podra deployarse automaticamente o tendra que agregar una configuracion para instalar los packetes y correr el proyecto, tambien puede crearse la carpeta lista para subir a algun servidor de fronted. 
 ```
-npm run dev
-npm run build
+npm run start
 ```
