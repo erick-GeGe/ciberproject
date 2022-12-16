@@ -366,5 +366,6 @@ app.get('/get_trust_store_firefox', function (req, res) {
 	res.json(newJson);
 })
 
-app.listen(port)
+
+app.listen(process.env.PORT || 3000)
 console.log('API escuchando en el puerto ' + port)
